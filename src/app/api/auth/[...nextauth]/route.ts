@@ -1,31 +1,55 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
 const handler = NextAuth({
-    pages: {
-        signIn: "/",
-    },
+ //   pages: {
+   //    signIn: "/",
+ //  },
   providers: [
     CredentialsProvider({
         name: "Credentials",
         credentials: {
-          email: { label: "Email", type: "email" },
-          password: { label: "Password", type: "password" },
+          login: { label: "Login", type: "text" },
+          senha: { label: "Senha", type: "password" },
         },
-        async authorize(credentials, req) {
+        async authorize(credentials) {
             if(!credentials) {
                 return null;
             }
                 if(
-                    credentials.email === "cissa.pmro@gmail.com" && 
-                    credentials.password === "123"
+                    credentials.login === "cissa" && 
+                    credentials.senha === "123"
                     ) {
                    return {
                     id: "1",
-                    name: "Cissa",
-                    email: "cissa.pmro@gmail.com"
+                    name: "Alcirleia de Souza Barbosa",
+                    login: "cissa"
                    }
                 }
+
+              /* try{
+                    const response = await fetch(`${process.env.NEXTAUTH_URL}/login/api/controle_usuario.php`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        identifier: credentials.login,
+                        password: credentials.senha,
+                    }),
+                    headers: { "Content-Type": "applicatiion/json" },
+                    });
+                    if (response.status !== 200) return null;
+                    const dados = await response.json();
+                    if(!dados.jwt || !dados.user) return null;
+                    cookies().set("jwt", dados.jwt);
+                    return {
+                        id: dados.usuario.id,
+                        name: dados.usuario.nome,
+                        login: dados.usuario.login,
+                       
+                    };
+                } catch (e) {
+                   return null; 
+                }*/
                 return null
             },
       }),
@@ -33,3 +57,5 @@ const handler = NextAuth({
 });
 
 export { handler as GET, handler as POST };
+
+

@@ -8,12 +8,11 @@ export default function LoginForm() {
         const formData = new FormData(e.currentTarget);
 
         const data = {
-            email: formData.get("email"),
-            password: formData.get('password'),
+            login: formData.get("login"),
+            senha: formData.get('senha'),
         };
-        //console.log(data);
+        console.log(data);
 
-        //ACESSAR DASHBOARD
         signIn("credencials", {
             ...data,
             callbackUrl: "/dashboard",
@@ -26,14 +25,14 @@ return(
   onSubmit={login}  className="bg-white p-12 rounded-lg w-96 max-w-full flex justify-center items-center flex-col gap-2">
 <h2 className="font-bold text-xl mb-3">Faça seu login</h2>
 <input 
-type="email"
-name="email"
-placeholder="email"
+type="text"
+name="login"
+placeholder="login"
 className="input input-primary w-full"
 />
 <input 
 type="password"
-name="password"
+name="senha"
 placeholder="Senha"
 className="input input-primary w-full"
 />
